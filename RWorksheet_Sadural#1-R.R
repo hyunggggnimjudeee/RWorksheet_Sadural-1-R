@@ -65,7 +65,6 @@ seq_Vec <- c(1:100)
 rev(seq_Vec)
 
 #11 List all the natural numbers below 25 that are multiples of 3 or 5.
-
 natural_Num <- seq(24,1)
 natural_Num2 <- Filter(function(i) { all(i %% (i %% 3 == 0 || i %% 5 == 0) != 0) } ,seq(24,1))
 natural_Num2 <- c(natural_Num2)
@@ -73,3 +72,42 @@ natural_Sum <- sum(natural_Num2)
 natural_Sum
 
 #11a data points from 10 to 11
+ten_11dtps <- length(rev(seq_Vec)) + length(natural_Sum) + length(natural_Num2)
+ten_11dtps
+
+#12
+{x <- 0+ x+ 5+}
+
+
+#it is error because the plus sign after the number 5 and it lacks proper context and structure
+#the statement should be:
+# {
+#   x <- 0
+#   x <- x + 5
+# }
+   
+#13 set vectorname score
+score <- c(72,86,92,63,88,91,92,75,75,77)
+
+score
+score_2 <- score[2]
+score_3 <- score[3]
+score_2
+score_3
+
+#14
+vector_1 <- c(1,2,NA,4,NA,6,7)
+
+#14a
+print(vector_1,na.print="999")
+
+#the NA change into "999"
+
+#15
+
+name = readline(prompt="Input Your Name: ")
+
+age = readline(prompt="Input Your Age: ")
+
+print(paste("My Name is",name, "and I am",age , "Years Old."))
+print(R.version.string)
