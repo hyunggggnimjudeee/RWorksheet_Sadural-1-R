@@ -127,4 +127,50 @@ save(subset_data, file = "Ranks.RData")
 #In step (c), we created an Excel file "PowerRanking.xlsx" from the data and then converted it to a CSV file "PowerRanking.csv."
 #In step (d), we extracted rows 10 to 20 from the data and saved it as "Ranks.RData," which is an RData file containing this subset of data.
 
-#9.
+#9.Download the Hotels-Vienna https://tinyurl.com/Hotels-Vienna
+
+#9a.
+##install.package("readxl")
+library(readxl)
+Data_1 <- read_excel("hotels-vienna.xlsx")
+Data_1
+View(Data_1)
+
+#9b.
+Dimension_File <- dim(Data_1)
+Dimension_File
+
+#9c.
+colnames(Data_1)
+Colums_1 <- Data_1[,c("country", "neighbourhood", "price", "stars", "accommodation_type", "rating")]
+View(Colums_1)
+
+#9d.
+save(Colums_1, file="new.RData")
+View(Colums_1)
+
+#9e.
+load("new.RData")
+Colums_1
+
+Head_six <- head(Colums_1)
+Tail_six <- tail(Colums_1)
+View(Head_six)
+View(Tail_six)
+
+#10.
+vegetables_1 <- c("Carrot", "Broccoli", "Spinach", "Tomato", "Cucumber", "Lettuce", "Pepper", "Onion", "Zucchini", "Potato")
+vegetables_1
+
+#10b.
+vegetables_1 <- c(vegetables_1, "Mushroom", "Eggplant")
+vegetables_1
+
+#10c
+vegetables <- append(vegetables_1, c("Cauliflower", "Asparagus", "Kale", "Artichoke"), after = 5)
+length(vegetables_1)
+
+#10d.
+vegetables_1 <- vegetables_1[-c(5, 10, 15)]
+vegetables
+
