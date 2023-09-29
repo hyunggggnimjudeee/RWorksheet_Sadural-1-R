@@ -167,10 +167,10 @@ vegetables_1 <- c(vegetables_1, "Mushroom", "Eggplant")
 vegetables_1
 
 #10c
-vegetables <- append(vegetables_1, c("Cauliflower", "Asparagus", "Kale", "Artichoke"), after = 5)
+vegetables_1 <- append(vegetables_1, c("Cauliflower", "Asparagus", "Kale", "Artichoke"), after = 5)
 length(vegetables_1)
 
 #10d.
 vegetables_1 <- vegetables_1[-c(5, 10, 15)]
-vegetables
+vegetables_1
 
