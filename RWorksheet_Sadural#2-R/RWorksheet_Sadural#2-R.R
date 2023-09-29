@@ -163,14 +163,14 @@ vegetables_1 <- c("Carrot", "Broccoli", "Spinach", "Tomato", "Cucumber", "Lettuc
 vegetables_1
 
 #10b.
-vegetables_1 <- c(vegetables_1, "Mushroom", "Eggplant")
-vegetables_1
+vegetables_2 <- c(vegetables_1, "Mushroom", "Eggplant")
+vegetables_2
 
 #10c
-vegetables_1 <- append(vegetables_1, c("Cauliflower", "Asparagus", "Kale", "Artichoke"), after = 5)
-length(vegetables_1)
+vegetables_3 <- append(vegetables_2, c("Cauliflower", "Asparagus", "Kale", "Artichoke"), after = 5)
+length(vegetables_3)
 
 #10d.
-vegetables_1 <- vegetables_1[-c(5, 10, 15)]
-vegetables_1
+vegetables_4 <- vegetables_3[-c(5, 10, 15)]
+vegetables_4
 
