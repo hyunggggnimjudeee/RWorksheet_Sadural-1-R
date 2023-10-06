@@ -77,37 +77,90 @@ data_1
 
 #2d. Associate the dataframe you have created in 2.(c) by naming the columns using the names() function. Change the column names by using names() function as City and Temperature. What is the R code and its result?
 names(data_1) <- c("City", "Temperature")
+View(data_1)
 
 #2e. Print the structure by using str() function. Describe the output.
 str(data_1)
 
 #2f. From the answer in d, what is the content of row 3 and row 4 What is its R code and its output?
-row3 <- data_1[3, ]
-row4 <- data_1[4, ]
+row_34 <- data_1[3:4, ]
+row_34
 
 #2g. From the answer in d, display the city with highest temperature and the city with the lowest temperature. What is its R code and its output?
-highest_tempcity <- data[data$Temperature == max(data$Temperature), ]
+highest_tempcity <- data_1[data_1$Temperature == max(data_1$Temperature), ]
+highest_tempcity
 
 #2g.
-lowest_tempcity <- data[data$Temperature == min(data$Temperature), ]
+lowest_tempcity <- data_1[data_1$Temperature == min(data_1$Temperature), ]
+lowest_tempcity
 
-#3.An array contains 1, 2, 3, 6, 7, 8, 9, 0, 3, 4, 5, 1
+#USING MATRICES
 
-#3a. What will be the R code for the #2 question and its result?
+#3
+
+matrix1 <- matrix(c(1:8,11:14), ncol = 4, nrow = 3)
+matrix1
+
+#3b
+
+matrix_mul <- matrix1 * 2
+matrix_mul
+
+#3c
+
+row_2 <- matrix1[2, ]
+row_2
+
+#3d
+sbst1_matrix <- matrix1[1:2, 3:4]
+sbst1_matrix
+
+#3e
+sbst_row <- matrix1[3, 2:3]
+sbst_row
+
+#3f
+col_4 <- matrix1[, 4]
+col_4
+
+#3g
+rownames(matrix1) <- c("isa", "dalawa", "tatlo")
+colnames(matrix1) <- c("uno", "dos", "tres", "quatro")
+
+matrix1
+
+#3h
+
+new_matrix1 <- matrix1
+dim(new_matrix1) <- c(6, 2)
+
+new_matrix1
+
+
+# USING ARRAYS
+
+#4. An array contains 1, 2, 3, 6, 7, 8, 9, 0, 3, 4, 5, 1
+
 values_0 <- c(1, 2, 3, 6, 7, 8, 9, 0, 3, 4, 5, 1)
+values_0
 
-#3a.
-myarray <- array(values_0, dim = c(2, 4, 3))
+#4a.
+myarray_1 <- array(values_0, dim = c(2, 4, 3))
+myarray_1
 
-#3b. Multiply the matrix by two. What is its R code and its result?
-numdimensions_0 <- length(dim(myarray))
+#4b.
+dim(myarray_1)
 
-#3c. What is the content of row 2? What is its R code?opii
-dimnames(myarray) <- list(
-  LETTERS[1:2],           # Row names (A, B)
-  LETTERS[1:4],           # Column names (A, B, C, D)
-  c("1st-Dimensional Array", "2nd-Dimensional Array", "3rd-Dimensional Array")
-)
+#4c.
+colnames(myarray_1) <- c("A","B","C","D")
+myarray_1
+
+rownames(myarray_1) <- c("a","b")
+myarray_1
+
+dimnames(myarray_1)[[3]] <- c("1st-Dimensional Array", "2nd-Dimensional Array", "3rd-Dimensional Array")
+myarray_1
+
 
 
 
