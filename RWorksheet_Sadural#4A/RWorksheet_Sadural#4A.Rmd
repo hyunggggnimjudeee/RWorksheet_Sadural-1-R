@@ -1,0 +1,72 @@
+---
+title: "RWorksheet_Sadural#4A"
+output: pdf_document
+date: "2023-10-25"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
+#1. The table below shows the data about shoe size and height. Create a data frame.
+
+#1a. 
+  household_data <- data.frame (shoe_size = c(6.5,9.0,8.5,8.5,10.5,7.0,9.5,9.0,13.0,7.5,10.5,8.5,12.0,10.5,13.0,11.5,8.5,5.0,10.0,6.5,7.5,8.5,10.5,8.5,10.5,11.0,9.0,13.0),
+  height = c(66.0,68.0,64.5,65.0,70.0,64.0,70.0,71.0,72.0,64.0,74.5,67.0,71.0,71.0,77.0,72.0,59.0,62.0,72.0,66.0,62.0,67.0,73.0,69.0,72.0,70.0,69.0,70.0),
+  Gender = c("F","F","F","F","M","F","F","F","M","F","M","F","M","M","M","M","F","F","M","F","F","M","M","F","M","M","M","M")
+  )
+  
+  household_data
+  
+#1b.
+male_data <- subset(household_data, Gender == "M", select = c(shoe_size , height))
+
+female_data <- subset(household_data, Gender == "F" , select = c(shoe_size , height))
+
+#1c.
+mean_shoe_size <- mean(df$ShoeSize)
+mean_height <- mean(df$Height)
+
+mean_shoe_size
+mean_height
+
+#1d.
+
+
+
+#2.
+
+months <- c("March", "April", "January", "November", "January", "September", "October",
+            "September", "November", "August", "January", "November", "November", "February",
+            "May", "August", "July", "December", "August", "August", "September", "November", "February", "April")
+
+custom_levels <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+
+factor_months_vector <- factor(months, levels = custom_levels)
+
+print(factor_months_vector)
+
+#3.
+summary(factor_months_vector)
