@@ -70,3 +70,49 @@ print(factor_months_vector)
 
 #3.
 summary(factor_months_vector)
+
+#4. Create a vector and factor for the table below
+freqdir <- data.frame (
+  Direction = c("East" , "West" , "North"),
+  Frequency = c("1" , "4" , "3")
+)
+freqdir
+
+
+
+
+#5.Enter the data below in Excel with file name = import_march.csv
+
+#5a.    
+data <- read.table("import_march.csv", header = TRUE, sep = ",")
+
+#5b.
+View(data)
+
+#6. Full Search 
+#Exhaustive search is a methodology for finding an answer by exploring all possible cases.When trying to find a desired number in a set of given numbers, the method of finding the corresponding number by checking all elements in the set one by one can be called an exhaustive search. Implement an exhaustive search function that meets the input/outputconditions below.
+
+exhaustive_search <- function(selected_number) {
+  if (selected_number < 1 || selected_number > 50) {
+    return("The number selected is beyond the range of 1 to 50")
+  } else if (selected_number == 20) {
+    return(TRUE)
+  } else {
+    return(selected_number)
+  }
+}
+
+random_selected_number <- (1:50, 1)
+
+cat("Randomly selected number: ",random)
+
+user_input <- as.numeric(readline("Enter a number: "))
+
+result <-exhaustive_search(user_input)
+
+cat("Result: ", result, "\n")
+
+
+
+
+
