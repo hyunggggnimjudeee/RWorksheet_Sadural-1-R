@@ -4,29 +4,8 @@ output: pdf_document
 date: "2023-10-25"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
 
 
 
@@ -46,13 +25,12 @@ male_data <- subset(household_data, Gender == "M", select = c(shoe_size , height
 female_data <- subset(household_data, Gender == "F" , select = c(shoe_size , height))
 
 #1c.
-mean_shoe_size <- mean(df$ShoeSize)
-mean_height <- mean(df$Height)
+mean_sh <- mean(household_data$shoe_size &household_data$height)
+mean_sh
 
-mean_shoe_size
-mean_height
 
-#1d.
+#1d.Is there a relationship between shoe size and height? Why?
+# Yes, because if your height is small, then your shoe size is small. And if your height is big then your shoe size is big too
 
 
 
@@ -72,47 +50,151 @@ print(factor_months_vector)
 summary(factor_months_vector)
 
 #4. Create a vector and factor for the table below
-freqdir <- data.frame (
-  Direction = c("East" , "West" , "North"),
-  Frequency = c("1" , "4" , "3")
-)
-freqdir
+Direction <- c("East","West","North")
+Frequency <- c(1,4,3)
 
+factor_direct <- factor(Direction)
+factor_direct
+
+factor_freq1 <- factor(Frequency)
+factor_freq1
+
+new_order_data <- factor(factor_direct,levels = c("East","West","North"))
+
+print(new_order_data)
+
+new_order_data2 <- factor(factor_freq1,levels = c(1,4,3))
+print(new_order_data2)
 
 
 
 #5.Enter the data below in Excel with file name = import_march.csv
 
 #5a.    
-data <- read.table("import_march.csv", header = TRUE, sep = ",")
+Exceldata <- read.csv("import_march.csv")
 
 #5b.
-View(data)
+Exceldata
+
+
 
 #6. Full Search 
-#Exhaustive search is a methodology for finding an answer by exploring all possible cases.When trying to find a desired number in a set of given numbers, the method of finding the corresponding number by checking all elements in the set one by one can be called an exhaustive search. Implement an exhaustive search function that meets the input/outputconditions below.
+#Exhaustive search is a methodology for finding an answer by exploring all possible cases.When trying to find a desired number in a set of given numbers, the method of finding the corresponding number by checking all elements in the set one by one can be called an exhaustive search. Implement an exhaustive search function that meets the input/output conditions below.
 
-exhaustive_search <- function(selected_number) {
-  if (selected_number < 1 || selected_number > 50) {
-    return("The number selected is beyond the range of 1 to 50")
-  } else if (selected_number == 20) {
-    return(TRUE)
-  } else {
-    return(selected_number)
-  }
+number_input <- readline(prompt="Enter number from 1 to 50:
+                         ")
+if(number_input>50){
+  print("The number is beyond the range of 1 to 50")
+}else{
+  print("TRUE")
 }
 
-random_selected_number <- (1:50, 1)
+#7.
+minimum_price <- function(price) {
+  
+  minprice <- price %/% 50
+  paste("The minimum no. of bills:", minprice)
+}
 
-cat("Randomly selected number: ",random)
+minimum_price(90)
 
-user_input <- as.numeric(readline("Enter a number: "))
+#8 Create a data frame
+mathgrades <- data.frame(
+    Name = c("Annie","Thea","Steve","Hanna"),
+    Grade1 = c(85,65,75,95),
+    Grade2 = c(65,75,55,75),
+    Grade3 = c(85,90,80,100),
+    Grade4 = c(100,90,85,90)
+)
+mathgrades
 
-result <-exhaustive_search(user_input)
+#8b.
 
-cat("Result: ", result, "\n")
+mathgrades$Average <- (mathgrades$Grade1 + mathgrades$Grade2 + mathgrades$Grade3 + mathgrades$Grade4) / 4
+
+highgrades <-  mathgrades[mathgrades$Average > 90, ]
+
+if(nrow(highgrades)>0){
+  print(highgrades$Name,"'s average grade this semester is:",highgrades)
+}else{
+  print("there is no student that got 90 average grades")
+}
+
+#8c
+ average_scores <- colMeans(mathgrades[, -1]) 
+
+if (average_scores[1] < 80) {
+    print("The 1st test was difficult.\n")
+}else if (average_scores[2] < 80) {
+    print("The 2nd test was difficult.\n")
+}else if (average_scores[3] < 80) {
+    print("The 3rd test was difficult.\n")
+}else if (average_scores[4] < 80) {
+    print("The 4th test was difficult.\n")
+}else{
+  print("No test that students find it difficult")
+}
+ 
+ 
+#8d
+#annie
+ 
+if (mathgrades[1,2] > mathgrades[1,3] && mathgrades[1,2] > mathgrades[1,4] && mathgrades[1,2] > mathgrades[1,5]) {
+  anniescoret <- mathgrades[1,2]
+} else if (mathgrades[1,3] > mathgrades[1,4] && mathgrades[1,3] > mathgrades[1,5]) {
+  anniescore <- mathgrades[1,3]
+} else if (mathgrades[1,4] > mathgrades[1,5] && mathgrades[1,2] > mathgrades[1,5]) {
+  anniescore <- mathgrades[1,4]
+} else {
+  anniescore <- mathgrades[1,5]
+}
+
+
+# thea scores
+if (mathgrades[2,2] > mathgrades[2,3] && mathgrades[2,2] >mathgrades[2,4] && mathgrades[2,2] > mathgrades[2,5]) {
+  theascore <- mathgrades[2,2]
+} else if (mathgrades[2,3] > mathgrades[2,4] &&mathgrades[2,3] > mathgrades[2,5]) {
+  theascore <- mathgrades[2,3]
+} else if (mathgrades[2,4] > mathgrades[2,5] && mathgrades[2,2] > mathgrades[2,5]) {
+  theascore <- mathgrades[2,4]
+} else {
+  theascore <-mathgrades[2,5]
+}
+
+# steve scores
+if (mathgrades[3,2] > mathgrades[3,3] &&mathgrades[3,2] > mathgrades[3,4] && mathgrades[3,2] >mathgrades[3,5]) {
+  stevescore <- mathgrades[3,2]
+} else if (mathgrades[3,3] > mathgrades[3,4] && mathgrades[3,3] > mathgrades[3,5]) {
+ stevescore <- mathgrades[2,3]
+} else if (mathgrades[3,4] > mathgrades[3,5] && mathgrades[3,2] > mathgrades[3,5]) {
+  stevescore <- mathgrades[3,4]
+} else {
+  stevescore <- mathgrades[3,5]
+}
+
+# hanna scores
+if (mathgrades[4,2] > mathgrades[4,3] && mathgrades[4,2] > mathgrades[4,4] && mathgrades[4,2] > mathgrades[4,5]) {
+  hannascore <- mathgrades[4,2]
+} else if (mathgrades[4,3] > mathgrades[4,4] && mathgrades[4,3] > mathgrades[4,5]) {
+  hannascore <- mathgrades[2,3]
+} else if (mathgrades[4,4] > mathgrades[4,5] && mathgrades[4,2] > mathgrades[4,5]) {
+  hannascore <- mathgrades[4,4]
+} else {
+  hannascore <- mathgrades[4,5]
+}
+
+mathgrades$HighestGrades <- c(anniescore, theascore, stevescore, hannascore)
+
+
+highest90 <- mathgrades[mathgrades$HighestGrades > 90,]
+highest90
+
+if (nrow(highest90) > 0) {
+  paste(highest90$Name, "'s highest grade this semester is", highest90$HighestGrade)
+} else {
+  paste("No students have an average math score over 90.")
+}
 
 
 
-
-
+```
