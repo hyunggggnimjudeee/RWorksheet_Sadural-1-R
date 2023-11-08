@@ -1,0 +1,130 @@
+---
+title: "RWorksheet_Sadural#4b"
+output: pdf_document
+date: "2023-11-08"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+#1. Using the for loop, create an R script that will display a 5x5 matrix as shown in Figure 1. It must contain vectorA = [1,2,3,4,5] and a 5 x 5 zero matrix.
+
+vectorA = c(1,2,3,4,5)
+matrixA <-matrix (0, nrow = 5, ncol =5)
+
+for (i in 1:5){
+  for (j in 1:5){
+      matrixA[i,j] <- abs(i-j)+ vectorA[j]
+  }
+}
+
+print(matrixA)
+
+#2.
+vectorA <- 1:5
+matrixA <- matrix(0, nrow=5, ncol=5)
+
+for (i in 1:nrow(matrixA)) {
+  for (j in 1:ncol(matrixA)) {
+    matrixA[i,j] <- abs(vectorA[i]-vectorA[j])
+    cat(matrixA[i,j], "\t")
+  }
+  cat("\n")
+}
+
+for(k in 1:5) {
+  cat("*")
+}
+
+#3.
+n <- as.numeric(readline(prompt = "Enter a number to start the Fibonacci sequence: "))
+
+a <- 0
+b <- 1
+c <- a + b
+
+repeat {
+  if (c > 500) { 
+    break
+  }
+  if (a == 0 & b == 1) {
+    cat(b, " ")
+  }
+  cat(c, " ")
+  a <- b
+  b <- c
+  c <- a + b
+}
+
+#4.
+
+
+
+
+
+
+
+
+
+
+
+#5.
+library(plotrix)
+income <- c(60,10,5,25)
+labels <- c("Food", "Electricity", "Savings", "Miscellaneous")
+colors <- c("#FDB813", "#5BC0EB", "#9BC53D", "#FF6F91")
+pct <- round((income/sum(income))*100,2)
+pie3D(pct,labels=labels, explode=0.05, col=colors, main="Monthly Income Allocation")
+
+
+!Piechart of Dela Cruz Family's Monthly Income Allocation](https://i.imgur.com/pRKVYyZ.png)
+
+#6.
+
+
+
+
+#7.
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
