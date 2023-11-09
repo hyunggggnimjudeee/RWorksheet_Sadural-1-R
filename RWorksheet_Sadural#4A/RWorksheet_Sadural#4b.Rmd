@@ -59,11 +59,25 @@ repeat {
   c <- a + b
 }
 
-#4.
+#4a.
+ShoesData <- read.csv("Shoe sizes")
 
+#4b.
+maleSub <- subset(ShoesData, Gender == "M")
+femSub <- subset(ShoesData, Gender == "F")
 
+cat("The number of observation in male subset:", nrow(maleSub),"\n")
+cat("The number of observation in female subset:", nrow(femSub),"\n")
 
+#4c.
+GenderMF <- table(ShoesData$Gender)
 
+barplot(GenderMF,
+        main = "Number of Male and Female in Household Data",
+        xlab = "Gender",
+        ylab = "Count" ,
+        col = c("red", "green"),
+        legend.text = c("Female", "Male"))
 
 
 
@@ -72,15 +86,19 @@ repeat {
 
 
 #5.
-library(plotrix)
-income <- c(60,10,5,25)
-labels <- c("Food", "Electricity", "Savings", "Miscellaneous")
-colors <- c("#FDB813", "#5BC0EB", "#9BC53D", "#FF6F91")
-pct <- round((income/sum(income))*100,2)
-pie3D(pct,labels=labels, explode=0.05, col=colors, main="Monthly Income Allocation")
+Incomemonth <- c("60", "10", "5", "25")
+
+pie(Incomemonth)
+
+pie("Delacruz_Income",
+    main = "Monthly Income of Delacruz Family",
+    col = rainbow(length(Incomemonth)),
+    labels = c("Food", "Electricity", "Savings", "Miscellaneous"))
+
+Incomemonth <-c("60","10","5", "25")
 
 
-!Piechart of Dela Cruz Family's Monthly Income Allocation](https://i.imgur.com/pRKVYyZ.png)
+
 
 #6.
 
