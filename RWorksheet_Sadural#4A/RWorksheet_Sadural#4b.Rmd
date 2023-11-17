@@ -12,32 +12,25 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #1. Using the for loop, create an R script that will display a 5x5 matrix as shown in Figure 1. It must contain vectorA = [1,2,3,4,5] and a 5 x 5 zero matrix.
 
-vectorA = c(1,2,3,4,5)
-matrixA <-matrix (0, nrow = 5, ncol =5)
+vec0 <- c(0)
+mat0 <- matrix(vec0, nrow = 5, ncol = 5)
 
-for (i in 1:5){
-  for (j in 1:5){
-      matrixA[i,j] <- abs(i-j)+ vectorA[j]
-  }
+mat0
+
+vecA <- c(1,2,3,4,5)
+mat_A <- matrix(vecA, nrow = 5, ncol = 5)
+
+for(i in 1:length(vecA)){
+    mat0[i, ] <- abs(vecA - vecA[i] )
 }
 
-print(matrixA)
+print(mat0)
 ```
 #2.
 ```{r}
-vectorA <- 1:5
-matrixA <- matrix(0, nrow=5, ncol=5)
-
-for (i in 1:nrow(matrixA)) {
-  for (j in 1:ncol(matrixA)) {
-    matrixA[i,j] <- abs(vectorA[i]-vectorA[j])
-    cat(matrixA[i,j], "\t")
-  }
-  cat("\n")
-}
-
-for(k in 1:5) {
-  cat("*")
+for(i in 1:5){
+  starstar <- rep("*",i)
+  print(starstar)
 }
 ```
 #3.
@@ -176,16 +169,16 @@ alexadata
 #7a.
 ```{r}
 #black
-alexa$variation <- gsub("Black Dot", "BlackDot", alexa$variation)
-alexa$variation <- gsub("Black Plus", "BlackPlus", alexa$variation)
-alexa$variation <- gsub("Black Show", "BlackShow", alexa$variation)
-alexa$variation <- gsub("Black Spot", "BlackSpot", alexa$variation)
+alexadata$variation <- gsub("Black Dot", "BlackDot", alexadata$variation)
+alexadata$variation <- gsub("Black Plus", "BlackPlus", alexadata$variation)
+alexadata$variation <- gsub("Black Show", "BlackShow", alexadata$variation)
+alexadata$variation <- gsub("Black Spot", "BlackSpot", alexadata$variation)
 
 #white
-alexa$variation <- gsub("White Dot", "WhiteDot", alexa$variation)
-alexa$variation <- gsub("White Plus", "WhitePlus", alexa$variation)
-alexa$variation <- gsub("White Show", "WhiteShow", alexa$variation)
-alexa$variation <- gsub("White Spot", "WhiteSpot", alexa$variation)
+alexadata$variation <- gsub("White Dot", "WhiteDot", alexadata$variation)
+alexadata$variation <- gsub("White Plus", "WhitePlus", alexadata$variation)
+alexadata$variation <- gsub("White Show", "WhiteShow", alexadata$variation)
+alexadata$variation <- gsub("White Spot", "WhiteSpot", alexadata$variation)
 
 alexadata
 
@@ -195,7 +188,7 @@ alexadata
 library("dplyr")
 
 var_DATA <- alexadata %>%
-  count(alexa$variation)
+  count(alexadata$variation)
 
 var_DATA
 
@@ -213,7 +206,7 @@ save(var_DATA, file= "variations.RData")
 load("variations.RData")
 var_DATA
 
-namevar <- var_DATA$`alexa$variation`
+namevar <- var_DATA$`alexadata$variation`
 
 alexaplot <- barplot(var_DATA$n,
                      names.arg = namevar,
@@ -225,43 +218,48 @@ alexaplot <- barplot(var_DATA$n,
                      cex.names = 0.5,
                      las = 2)
 
-knitr::include_graphics("/cloud/project/RWorksheet_Sadural#4A/vardata.png")
 
 
 
+png("var_Data.png")
+dev.off()
 
+knitr::include_graphics("/cloud/project/RWorksheet_Sadural#4A/var_Data.png")
 ```
 #7d.
 ```{r}
-blackvariation <- var_DATA[var_DATA$`alexa$variation`%in%c("Black", "BlackPlus" , "BlackShow" ,"BlackSpot" , "BlackDot"),]
-
-whitevariation <- var_DATA[var_DATA$`alexa$variation`%in%c("White", "WhiteDot", "WhitePlus", "WhiteShow", "WhiteSpot"),]
+library(RColorBrewer)
 
 par(mfrow = c(1,2))
 
-blackvariation
 
-blackvarplot <- barplot(height = blackvariation$n,
-                        names.arg = blackvariation$`alexa$variation`,
-                        col = c("black"),
-                        xlab = "Variation",
-                        ylab = "Count",
-                        border = "black",
+blackvarplot <- barplot(height = c(261,270,265,241,516), 
+                        names.arg = c("Black","BlackPlus","BlackShow","BlackSpot","BlackDot"), main = "Black Variations",
+                        col = 1:5,
                         space = 0.5,
-                        cex.names = 0.4)
-
-
-whitevarplot <- barplot(height = whitevariation$n,
-                        names.arg = blackvariation$`alexa$variation`,
-                        col = "white",
                         xlab = "Variation",
-                        ylab = "Count",
-                        border = "black",
+                        ylab = "Count")
+
+png("blackvarplot.png")
+dev.off()
+
+knitr::include_graphics("/cloud/project/RWorksheet_Sadural#4A/varblackplot.png")
+
+
+whitevarplot <- barplot(height = c(91,184,78,85,109), 
+                        names.arg = c("White", "WhiteDot", "WhitePlus", "WhiteShow", "WhiteSpot"),
+                        main = "White Variations",
                         space = 0.5,
-                        cex.names = 0.4)
+                        col = 6:10,
+                        xlab = "Variation",
+                        ylab = "Count",)
 
-knitr::include_graphics("/cloud/project/RWorksheet_Sadural#4A/BlackWhite_var.png")
 
+
+png("whitevarplot.png")
+dev.off()
+
+knitr::include_graphics("/cloud/project/RWorksheet_Sadural#4A/varwhiteplot.png")
 
 ```
 
