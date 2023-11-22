@@ -1,0 +1,149 @@
+---
+title: "Practical in CS 101"
+author: "Ryan Jude Sadural BSIT 2-C"
+output: pdf_document
+date: "2023-11-15"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+#1.Load the mtcars.csv dataset into the R environment. Show your answer.
+
+data("mtcars")
+mtcars
+
+```
+
+
+```{r}
+#2.How many observations does the mtcars have? How about the number of columns? List down the names of the column. 
+
+library(tibble)
+head(mtcars)
+mtcars <- rownames_to_column(mtcars,var= "model1")
+head(mtcars)
+```
+```{r}
+#3.Generate a summary of the numerical variables as well as the structure of each variable in the mtcars dataset. 
+library(dplyr)
+data <- mtcars
+sample <- head(data)
+sample %>% summarize_all(mean)
+
+```
+
+```{r}
+#5.Which from the model has the highest mpg? How about the car model with the highest horsepower? Show your solution that will display the name of the model with the highest mpg and the car model with the highest horsepower.
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```

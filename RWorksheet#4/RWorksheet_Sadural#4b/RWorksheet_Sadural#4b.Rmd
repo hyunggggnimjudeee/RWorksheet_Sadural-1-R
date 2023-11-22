@@ -1,0 +1,301 @@
+---
+title: "RWorksheet_Sadural#4b"
+output: pdf_document
+date: "2023-11-08"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+#1. Using the for loop, create an R script that will display a 5x5 matrix as shown in Figure 1. It must contain vectorA = [1,2,3,4,5] and a 5 x 5 zero matrix.
+
+vec0 <- c(0)
+mat0 <- matrix(vec0, nrow = 5, ncol = 5)
+
+mat0
+
+vecA <- c(1,2,3,4,5)
+mat_A <- matrix(vecA, nrow = 5, ncol = 5)
+
+for(i in 1:length(vecA)){
+    mat0[i, ] <- abs(vecA - vecA[i] )
+}
+
+print(mat0)
+```
+#2..
+```{r}
+for(i in 1:5){
+  starstar <- rep("*",i)
+  print(starstar)
+}
+```
+#3.
+```{r}
+n <- as.numeric(readline(prompt = "Enter a number to start the Fibonacci sequence: "))
+
+a <- 0
+b <- 1
+c <- a + b
+
+repeat {
+  if (c > 500) { 
+    break
+  }
+  if (a == 0 & b == 1) {
+    cat(b, " ")
+  }
+  cat(c, " ")
+  a <- b
+  b <- c
+  c <- a + b
+}
+```
+#4a.
+```{r}
+  ShoesData <- read.csv("Shoe sizes.csv")
+  
+  #4b.
+  maleSub <- subset(ShoesData, Gender == "M")
+  femSub <- subset(ShoesData, Gender == "F")
+  
+  cat("The number of observation in male subset:", nrow(maleSub),"\n")
+  cat("The number of observation in female subset:", nrow(femSub),"\n")
+  
+  #4c.
+  GenderMF <- table(ShoesData$Gender)
+  
+  barplot(GenderMF,
+          main = "Number of Male and Female in Household Data",
+          xlab = "Gender",
+          ylab = "Count" ,
+          col = c("red", "green"),
+          legend.text = c("Female", "Male"))
+```
+
+#5.
+```{r}
+Incomemonth <- c(60,10,5,25)
+
+pie(Incomemonth,labels = paste0(Incomemonth,"%"),
+    main = "Dela Cruz Family Expenses", col = rainbow(length(Incomemonth)))
+
+legend("topleft", legend = c("Food","Electricity", "Savings","Miscellaneous"),
+       fill = rainbow(length(Incomemonth)))
+```
+
+
+
+#6.
+```{r}
+data(iris)
+
+str(iris)
+
+#there are 150 observation and 5 variables in iris dataset. there are numeric measurements in sepal.width, sepal.length, petal.width, and petal.length as well as the factor variable for the species
+```
+#6b
+```{r}
+data(iris)
+
+meaniris <- colMeans(iris[, 1:4])
+
+meaniris
+
+```
+#6c.
+```{r}
+data(iris)
+
+species <- table(iris$Species)
+
+pie(species, labels = names(species),
+    col = rainbow(length(species)),
+    main = "Species Distribution")
+
+legend("topright", legend = names(species),
+       fill = rainbow(length(species)), title = "Species")
+
+```
+#6d.
+```{r}
+data(iris)
+
+setosa_subs <- subset(iris, Species == "setosa")
+versicolor_subs <- subset(iris, Species == "versicolor")
+virginica_subs <- subset(iris, Species == "virginica")
+
+#to display the last 6 rows of each species
+
+tail(setosa_subs)
+tail(versicolor_subs)
+tail(virginica_subs)
+```
+#6e.
+```{r}
+data(iris)
+
+iris$Species <- as.factor(iris$Species)
+
+colors <- c("setosa" = "#66c2a5", "versicolor" = "#fc8d62", "virginica" = "#8da0cb")
+symbols <- c("setosa" = 16, "versicolor" = 17, "virginica" = 18)
+
+plot(iris$Sepal.Length, iris$Sepal.Width, 
+     col = colors[iris$Species], 
+     pch = symbols[iris$Species],
+     main = "Iris Dataset",
+     sub = "Sepal Width and Length",
+     xlab = "Sepal Length",
+     ylab = "Sepal Width")
+
+legend("topright",legend = levels(iris$Species),col= colors, pch = symbols, title = "Species") 
+
+#6e
+#by factoring the species, it will be represents as a categories in R. 
+```
+
+#7.
+```{r}
+library(readxl)
+
+alexadata <- read_excel("alexa_file.xlsx")
+
+alexadata
+
+```
+#7a.
+```{r}
+#black
+alexadata$variation <- gsub("Black Dot", "BlackDot", alexadata$variation)
+alexadata$variation <- gsub("Black Plus", "BlackPlus", alexadata$variation)
+alexadata$variation <- gsub("Black Show", "BlackShow", alexadata$variation)
+alexadata$variation <- gsub("Black Spot", "BlackSpot", alexadata$variation)
+
+#white
+alexadata$variation <- gsub("White Dot", "WhiteDot", alexadata$variation)
+alexadata$variation <- gsub("White Plus", "WhitePlus", alexadata$variation)
+alexadata$variation <- gsub("White Show", "WhiteShow", alexadata$variation)
+alexadata$variation <- gsub("White Spot", "WhiteSpot", alexadata$variation)
+
+alexadata
+
+```
+#7b.
+```{r}
+library("dplyr")
+
+var_DATA <- alexadata %>%
+  count(alexadata$variation)
+
+var_DATA
+
+save(var_DATA, file= "variations.RData")
+
+
+
+
+```
+
+
+#7c.
+```{r}
+
+load("variations.RData")
+var_DATA
+
+namevar <- var_DATA$`alexadata$variation`
+
+alexaplot <- barplot(var_DATA$n,
+                     names.arg = namevar,
+                     main = "Total number of variations",
+                     xlab = "Name of Variations",
+                     ylab = "Total of each variations",
+                     col = 1:16,
+                     space = 0.1,
+                     cex.names = 0.5,
+                     las = 2)
+
+
+
+
+png("var_Data.png")
+dev.off()
+
+knitr::include_graphics("/cloud/project/RWorksheet_Sadural#4A/var_Data.png")
+```
+#7d.
+```{r}
+library(RColorBrewer)
+
+par(mfrow = c(1,2))
+
+
+blackvarplot <- barplot(height = c(261,270,265,241,516), 
+                        names.arg = c("Black","BlackPlus","BlackShow","BlackSpot","BlackDot"), main = "Black Variations",
+                        col = 1:5,
+                        space = 0.5,
+                        xlab = "Variation",
+                        ylab = "Count")
+
+png("blackvarplot.png")
+dev.off()
+
+knitr::include_graphics("/cloud/project/RWorksheet_Sadural#4A/varblackplot.png")
+
+
+whitevarplot <- barplot(height = c(91,184,78,85,109), 
+                        names.arg = c("White", "WhiteDot", "WhitePlus", "WhiteShow", "WhiteSpot"),
+                        main = "White Variations",
+                        space = 0.5,
+                        col = 6:10,
+                        xlab = "Variation",
+                        ylab = "Count",)
+
+
+
+png("whitevarplot.png")
+dev.off()
+
+knitr::include_graphics("/cloud/project/RWorksheet_Sadural#4A/varwhiteplot.png")
+
+```
+
+
+
+
+
+
+
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
