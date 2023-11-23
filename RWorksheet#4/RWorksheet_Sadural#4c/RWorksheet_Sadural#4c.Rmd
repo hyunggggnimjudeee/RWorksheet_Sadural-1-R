@@ -1,0 +1,204 @@
+---
+title: "RWorksheet_Sadural#4c"
+output: pdf_document
+date: "2023-11-22"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+#1.Use the dataset mpg
+mpg <- read.csv("mpg.csv")
+```
+
+```{r}
+#B.
+categorical_vars <- c("manufacturer", "model", "trans", "drv", "fl", "class")
+categorical_vars
+```
+
+```{r}
+#1c.
+continuous_vars <- c("displ", "year", "cyl", "cty", "hwy")
+continuous_vars
+```
+
+```{r}
+#2.
+#A.
+library(dplyr)
+
+manufacturer_models <- mpg %>%
+  group_by(manufacturer) %>%
+  summarise(num_models = n_distinct(model)) %>%
+  arrange(desc(num_models))
+
+manufacturer_models[1, ]
+
+```
+
+```{r}
+#B.
+library(ggplot2)
+
+ggplot(manufacturer_models, aes(x = manufacturer, y = num_models)) +
+  geom_bar(stat = "identity", fill = "blue") +
+  labs(title = "Number of Models by Manufacturer", x = "Manufacturer", y = "Number of Models") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r}
+#2.
+#A. What does ggplot(mpg, aes(model, manufacturer)) + geom_point() show?
+
+#This ggplot command creates a scatter plot where each point represents a car model, positioned along the x-axis by the model name and along the y-axis by the manufacturer.
+
+#B. Is it useful? If not, how could you modify the data to make it more informative?
+
+#The plot may be useful for visualizing the distribution of models across manufacturers, but it could be crowded and hard to interpret if there are many models. To make it more informative, you could consider grouping or coloring points based on some other variable, such as the fuel type or class of the car.
+```
+
+```{r}
+#3.
+top_20_data <- head(mpg[order(mpg$year, decreasing = TRUE), ], 20)
+ggplot(top_20_data, aes(x = year, y = model)) +
+  geom_point() +
+  labs(title = "Top 20 Observations: Model vs Year", x = "Year", y = "Model") + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r}
+#4.
+library(dplyr)
+
+cars_per_model <- mpg %>%
+  group_by(model) %>%
+  summarise(num_cars = n())
+
+  print(cars_per_model)
+```
+
+```{r}
+#4A.
+top_20_data <- head(mpg[order(mpg$year, decreasing = TRUE), ], 20)
+
+ggplot(top_20_data, aes(x = model)) +
+  geom_bar(fill = "skyblue", color = "black") +
+  labs(title = "Top 20 Observations: Number of Cars per Model",
+       x = "Model", y = "Number of Cars") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r}
+ggplot(top_20_data, aes(y = model)) +
+  geom_bar(fill = "salmon", color = "black") +
+  labs(title = "Top 20 Observations: Number of Cars per Model",
+       x = "Number of Cars", y = "Model") +
+  coord_flip() +
+  theme(axis.text.y = element_text(angle = 45, hjust = 1))
+```
+
+```{r}
+#5.
+
+ggplot(mpg, aes(x = cyl, y = displ, color = displ)) +
+  geom_point() +
+  labs(title = "Relationship between No. of Cylinders and Engine Displacement",
+       x = "Number of Cylinders", y = "Engine Displacement") +
+  scale_color_gradient(low = "blue", high = "red") +
+  theme_minimal()
+
+#A.
+#The plot shows that there is a positive relationship between the number of cylinders and engine displacement. As the number of cylinders increases, the engine displacement tends to increase. The color gradient adds an extra dimension, indicating the specific values of engine displacement.
+```
+
+```{r}
+#5.
+ggplot(mpg, aes(x = displ, y = hwy, color = cyl)) +
+  geom_point() +
+  labs(title = "Relationship between Engine Displacement and Highway MPG",
+       x = "Engine Displacement", y = "Highway MPG") +
+  scale_color_gradient(low = "blue", high = "red") +
+  theme_minimal()
+```
+
+```{r}
+#6.
+traffic <- read.csv("traffic.csv")
+```
+
+```{r}
+#A.
+dim(traffic)
+colnames(traffic)
+```
+
+```{r}
+#B.
+junctions <- unique(traffic$junction_name)
+junctions
+```
+
+```{r}
+#C..
+library(ggplot2)
+
+for (j in junctions) {
+ subset_traffic <- traffic[traffic$junction_name == j, ]
+ ggplot(subset_traffic, aes(x = timestamp, y = congestion_value, group = ID)) +
+    geom_line() +
+    labs(title = paste("Congestion over time for junction", j)) +
+    theme_minimal()
+}
+```
+
+```{r}
+#7
+#A.
+library(openxlsx)
+
+alexa_data <- read.xlsx("alexa_file.xlsx",sheet = "Sheet1")
+```
+
+```{r}
+#B.
+library(dplyr)
+
+alexa_data <- alexa_file %>%
+ group_by(variations) %>%
+ summarise_all(total = sum(variations))
+
+print(alexa_data)
+
+```
+
+```{r}
+#C.
+ggplot(alexa_file, aes(x = Date, y = NumberOfVerifiedReviews, group = Variation, color = Variation)) +
+ geom_line() +
+ labs(title = "Variations", x = "Date", y = "NumberOfVerifiedReviews") +
+ theme_minimal()
+```
+```{r}
+#D.
+ggplot(alexa_file, aes(x = Date, y = NumberOfVerifiedReviews, group = 1)) +
+ geom_line() +
+ labs(title = "Verified Reviews", x = "Date", y = "NumberOfVerifiedReviews") +
+ theme_minimal()
+```
+
+```{r}
+#E.
+alexa_file %>%
+ group_by(Variation) %>%
+ summarise(AvgRating = mean(Rating)) %>%
+ arrange(desc(AvgRating))
+
+ggplot(alexa_file, aes(x = Rating, y = NumberOfVerifiedReviews, group = Variation, color = Variation)) +
+ geom_line() +
+ labs(title = "Variations and Ratings", x = "Rating", y = "NumberOfVerifiedReviews") +
+ theme_minimal()
+```
