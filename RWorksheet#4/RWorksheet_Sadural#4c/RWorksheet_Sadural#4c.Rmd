@@ -157,48 +157,84 @@ for (j in junctions) {
 
 ```{r}
 #7
-#A.
+
 library(openxlsx)
 
-alexa_data <- read.xlsx("alexa_file.xlsx",sheet = "Sheet1")
+alexafile <- read.xlsx("alexa_file.xlsx")
+```
+
+```{r}
+#A.
+alexa_obser <- nrow(alexafile)
+
+alexacol_obser <- ncol(alexafile)
+
+cat("The number of observations on alexa is:",alexa_obser,"\n")
+cat("The number of coloumns on alexa is:",alexacol_obser,"\n")
 ```
 
 ```{r}
 #B.
 library(dplyr)
+groupvari <- alexafile%>%
+  group_by(variation)%>%
+  summarise(totalcount_ = n())
+ 
 
-alexa_data <- alexa_file %>%
- group_by(variations) %>%
- summarise_all(total = sum(variations))
-
-print(alexa_data)
+groupvari
 
 ```
 
 ```{r}
 #C.
-ggplot(alexa_file, aes(x = Date, y = NumberOfVerifiedReviews, group = Variation, color = Variation)) +
- geom_line() +
- labs(title = "Variations", x = "Date", y = "NumberOfVerifiedReviews") +
- theme_minimal()
+library(ggplot2)
+
+ggplot(alexafile, aes(x = variation)) +
+  geom_bar() +
+  labs(title = "Distribution of Variations",
+       x = "Variation",
+       y = "Count") +
+  theme_minimal()
 ```
+
 ```{r}
 #D.
-ggplot(alexa_file, aes(x = Date, y = NumberOfVerifiedReviews, group = 1)) +
- geom_line() +
- labs(title = "Verified Reviews", x = "Date", y = "NumberOfVerifiedReviews") +
- theme_minimal()
+alexafile$date <- as.Date(alexafile$date)
+
+alexafile$month <- format(alexafile$date, "%m")
+
+monthscount <- alexafile %>%
+  group_by(month) %>%
+  summarise(num_reviews = n())
+
+
+monthlyrev <- table(monthscount)
+
+ggplot(monthscount, aes(x = month, y = num_reviews, group = 1)) +
+  geom_line(color = "blue") +
+  labs(title = "Number of Verified Reviews Per Month",
+       x = "Month of 2017", y = "Number of Reviews")
 ```
 
 ```{r}
 #E.
-alexa_file %>%
- group_by(Variation) %>%
- summarise(AvgRating = mean(Rating)) %>%
- arrange(desc(AvgRating))
+library(dplyr)
+ggplot(alexafile, aes(x = variation, y = rating, fill = variation)) +
+  geom_bar(stat = "summary", fun = "mean", position = "dodge") +
+  scale_fill_manual(values = rainbow(n = length(unique(alexafile$variation)))) +  
+  labs(title = "Relationship Between Variations and Ratings",
+       x = "Variations",
+       y = "Average Rating") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
-ggplot(alexa_file, aes(x = Rating, y = NumberOfVerifiedReviews, group = Variation, color = Variation)) +
- geom_line() +
- labs(title = "Variations and Ratings", x = "Rating", y = "NumberOfVerifiedReviews") +
- theme_minimal()
+var_ratings <-  alexafile %>%
+  group_by(variation)%>%
+  summarise(avearage_rating = mean(rating, na.rm = TRUE))
+
+max_rating <- max(var_ratings$average_rating, na.rm = TRUE)
+
+highrate <- alexafile %>%
+  filter(rating == max_rating)
+print(highrate)
 ```
